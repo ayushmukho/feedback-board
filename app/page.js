@@ -3,12 +3,13 @@
 import { useState } from "react";
 import FeedbackItem from "./components/FeedbackItem";
 import FeedbackFromPopup from "./components/FeedbackFromPopup";
+import Button from "./shared-components/Button";
 
 export default function Home() {
   const [showFeedbackPopup, setShowFeedbackPopup] = useState(false);
 
   const openFeedbackModal = () => {
-    setShowFeedbackPopup(prev => !prev)
+    setShowFeedbackPopup((prev) => !prev);
   };
   return (
     <main className="bg-white md:max-w-2xl mx-auto shadow-lg md:rounded-lg md:mt-8 overflow-hidden">
@@ -21,12 +22,9 @@ export default function Home() {
       <div className="bg-gray-100 px-8 py-4 flex border-b">
         <div className="grow"></div>
         <>
-          <button
-            onClick={openFeedbackModal}
-            className="bg-blue-500 py-1 px-4 rounded-md text-white text-opacity-90"
-          >
+          <Button primary onClick={openFeedbackModal}>
             Make Suggestion
-          </button>
+          </Button>
         </>
       </div>
       <div className="px-8">
@@ -36,7 +34,7 @@ export default function Home() {
         <FeedbackItem />
       </div>
       {showFeedbackPopup && (
-        <FeedbackFromPopup />
+        <FeedbackFromPopup setShowFeedbackPopup={setShowFeedbackPopup} />
       )}
     </main>
   );
