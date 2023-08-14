@@ -15,14 +15,14 @@ export default function Popup({ setShow, children, title }) {
           className="bg-white md:max-w-2xl md:mx-auto md:rounded-lg overflow-hidden"
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="realtive">
+          <div className="realtive md:min-h-0 min-h-[40px]">
             <button
               onClick={() => setShow((prev) => !prev)}
               className="absolute top-4 left-8 md:hidden"
             >
               <LeftArrow />
             </button>
-            <h2 className="py-4 text-center border-b">{title}</h2>
+            {!!title && <h2 className="py-4 text-center border-b">{title}</h2>}
           </div>
           {children}
         </div>
