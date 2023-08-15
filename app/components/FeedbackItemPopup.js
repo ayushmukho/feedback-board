@@ -15,7 +15,7 @@ export default function FeedbackItemPopup({
         <p className="text-gray-600"> {description}</p>
       </div>
       <div className="flex justify-end px-8 py-2 border-b">
-        <Button primary>
+        <Button primary="true">
           <span className="triangle-vote-up"></span>
           Upvote {votesCount}
         </Button>

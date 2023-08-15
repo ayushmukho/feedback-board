@@ -49,14 +49,15 @@ export default function Home() {
       <div className="bg-gray-100 px-8 py-4 flex border-b">
         <div className="grow"></div>
         <>
-          <Button primary onClick={openFeedbackModalForm}>
+          <Button primary="true" onClick={openFeedbackModalForm}>
             Make Suggestion
           </Button>
         </>
       </div>
       <div className="px-8">
-        {feedback.map((feedback) => (
+        {feedback.map((feedback, idx) => (
           <FeedbackItem
+            key={idx}
             {...feedback}
             openModal={() => openFeedbackModalItem(feedback)}
           />

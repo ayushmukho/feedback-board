@@ -30,7 +30,7 @@ export default function FeedbackItemPopupComments() {
         />
         <div className="flex justify-end gap-2 mt-2">
           <Button>Attach Files</Button>
-          <Button primary disabled={commentText === ""}>
+          <Button primary="true" disabled={commentText === ""}>
             Comment
           </Button>
         </div>
