@@ -13,4 +13,7 @@ export default class API {
   uploadPostFile(body) {
     return this.instance.post("/upload", body);
   }
+  deleteFileFromS3({ name }) {
+    return this.instance.delete(`/upload/${name}`);
+  }
 }
