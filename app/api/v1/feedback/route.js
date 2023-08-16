@@ -5,9 +5,9 @@ connectDatabase();
 
 export const POST = async (request) => {
   const jsonBody = await request.json();
-  const { title, description } = jsonBody;
+  const { title, description, uploads } = jsonBody;
   //const ip = "";
-  await Feedback.create({ title, description });
+  await Feedback.create({ title, description, uploads });
 
   return Response.json(jsonBody);
 };

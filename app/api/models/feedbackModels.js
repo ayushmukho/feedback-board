@@ -14,6 +14,9 @@ const feedbackSchema = new mongoose.Schema(
     //   type: String,
     //   required: true,
     // },
+    uploads: {
+      type: [String],
+    },
   },
   {
     timestamps: true,

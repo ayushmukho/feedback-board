@@ -11,14 +11,23 @@ export default function FeedbackFromPopup({ setShow }) {
   const [description, setDescription] = useState("");
   const [uploads, setUploads] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [creatPostLoading, setCreatePostLoading] = useState(false);
   const feedbackServiceApi = new API();
 
-  const handleCreatePost = (e) => {
+  const handleCreatePost = async (e) => {
     e.preventDefault();
-
-    feedbackServiceApi.createPost({ title, description }).then((res) => {
-      setShow((prev) => !prev);
+    setCreatePostLoading(true);
+    const res = await feedbackServiceApi.createPost({
+      title,
+      description,
+      uploads,
     });
+
+    if (res.data) {
+      setCreatePostLoading(false);
+      setShow((prev) => !prev);
+    }
+    setCreatePostLoading(false);
   };
   const handleAttachFiles = async (e) => {
     setLoading(true);
@@ -117,8 +126,13 @@ export default function FeedbackFromPopup({ setShow }) {
               </>
             )}
           </label>
-          <Button primary="true" onClick={handleCreatePost}>
-            Create Post
+
+          <Button
+            disabled={creatPostLoading}
+            primary="true"
+            onClick={handleCreatePost}
+          >
+            {creatPostLoading ? "Creating.." : "Create"}
           </Button>
         </div>
       </form>
