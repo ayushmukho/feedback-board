@@ -1,14 +1,24 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FeedbackItem from "./components/FeedbackItem";
 import FeedbackFromPopup from "./components/FeedbackFromPopup";
 import Button from "./shared-components/Button";
 import FeedbackItemPopup from "./components/FeedbackItemPopup";
+import API from "./services/feedbackService";
 
 export default function Home() {
   const [showFeedbackPopupFrom, setShowFeedbackPopupForm] = useState(false);
   const [showFeedbackPopupItem, setShowFeedbackPopupItem] = useState(null);
+  const [feedback, setFeedback] = useState([]);
+
+  const feedbackServiceApi = new API();
+
+  useEffect(() => {
+    feedbackServiceApi.getAllFeedbackPost().then((res) => {
+      setFeedback(res.data);
+    });
+  }, []);
 
   const openFeedbackModalForm = () => {
     setShowFeedbackPopupForm((prev) => !prev);
@@ -16,27 +26,6 @@ export default function Home() {
   const openFeedbackModalItem = (feedback) => {
     setShowFeedbackPopupItem(feedback);
   };
-
-  const feedback = [
-    {
-      title: "Improve your code quality",
-      description:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-      votesCount: 80,
-    },
-    {
-      title: "Improve your code quality2",
-      description:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-      votesCount: 10,
-    },
-    {
-      title: "Improve your code quality3",
-      description:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-      votesCount: 1,
-    },
-  ];
 
   return (
     <main className="bg-white md:max-w-2xl mx-auto shadow-lg md:rounded-lg md:mt-8 overflow-hidden">

@@ -11,3 +11,7 @@ export const POST = async (request) => {
 
   return Response.json(jsonBody);
 };
+
+export const GET = async () => {
+  return Response.json(await Feedback.find());
+};
