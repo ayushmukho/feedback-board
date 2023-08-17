@@ -1,7 +1,9 @@
 import { connectDatabase } from "../../config/database";
 import { Feedback } from "../../models/feedbackModels";
 
-connectDatabase();
+(async function () {
+  await connectDatabase();
+})();
 
 export const POST = async (request) => {
   const jsonBody = await request.json();
