@@ -6,10 +6,12 @@ import FeedbackFromPopup from "./components/FeedbackFromPopup";
 import Button from "./shared-components/Button";
 import FeedbackItemPopup from "./components/FeedbackItemPopup";
 import API from "./services/feedbackService";
+import Skeleton from "./utils/svg/Skeleton";
 
 export default function Home() {
   const [showFeedbackPopupFrom, setShowFeedbackPopupForm] = useState(false);
   const [showFeedbackPopupItem, setShowFeedbackPopupItem] = useState(null);
+  const [loading, setloading] = useState(true);
   const [feedback, setFeedback] = useState([]);
 
   const feedbackServiceApi = new API();
@@ -17,6 +19,7 @@ export default function Home() {
   useEffect(() => {
     feedbackServiceApi.getAllFeedbackPost().then((res) => {
       setFeedback(res.data);
+      setloading(false);
     });
   }, []);
 
@@ -44,13 +47,19 @@ export default function Home() {
         </>
       </div>
       <div className="px-8">
-        {feedback.map((feedback, idx) => (
-          <FeedbackItem
-            key={idx}
-            {...feedback}
-            openModal={() => openFeedbackModalItem(feedback)}
-          />
-        ))}
+        {loading ? (
+          <div className="gap-8 my-8 items-center">
+            <Skeleton />
+          </div>
+        ) : (
+          feedback.map((feedback, idx) => (
+            <FeedbackItem
+              key={idx}
+              {...feedback}
+              openModal={() => openFeedbackModalItem(feedback)}
+            />
+          ))
+        )}
       </div>
       {showFeedbackPopupFrom && (
         <FeedbackFromPopup setShow={setShowFeedbackPopupForm} />
