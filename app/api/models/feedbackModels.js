@@ -17,10 +17,17 @@ const feedbackSchema = new mongoose.Schema(
     uploads: {
       type: [String],
     },
+    vote: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Vote",
+      },
+    ],
   },
   {
     timestamps: true,
   }
 );
 
-export const Feedback = mongoose.model("Feedback", feedbackSchema);
+export const Feedback =
+  mongoose.models.Feedback || mongoose.model("Feedback", feedbackSchema);

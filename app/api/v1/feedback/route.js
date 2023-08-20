@@ -1,5 +1,6 @@
 import { connectDatabase } from "../../config/database";
 import { Feedback } from "../../models/feedbackModels";
+import { Vote } from "../../models/vote";
 
 (async function () {
   await connectDatabase();
@@ -15,5 +16,5 @@ export const POST = async (request) => {
 };
 
 export const GET = async () => {
-  return Response.json(await Feedback.find());
+  return Response.json(await Feedback.find()?.populate("vote"));
 };

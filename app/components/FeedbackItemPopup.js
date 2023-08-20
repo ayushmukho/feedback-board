@@ -1,5 +1,5 @@
-import Button from "../shared-components/Button";
-import Popup from "../shared-components/Popup";
+import Button from "./shared-components/Button";
+import Popup from "./shared-components/Popup";
 import FeedbackItemPopupComments from "./FeedbackItemPopupComments";
 
 export default function FeedbackItemPopup({

@@ -21,4 +21,8 @@ export default class API {
   deleteFileFromS3({ name }) {
     return this.instance.delete(`/upload/${name}`);
   }
+
+  voteForPost(body) {
+    return this.instance.post("/vote", body);
+  }
 }

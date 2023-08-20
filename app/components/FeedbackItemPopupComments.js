@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Button from "../shared-components/Button";
-import Avatar from "../shared-components/Avatar";
+import Button from "./shared-components/Button";
+import Avatar from "./shared-components/Avatar";
 
 export default function FeedbackItemPopupComments() {
   const [commentText, setCommentText] = useState("");

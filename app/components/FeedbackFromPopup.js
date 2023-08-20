@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Button from "../shared-components/Button";
-import Popup from "../shared-components/Popup";
+import Button from "./shared-components/Button";
+import Popup from "./shared-components/Popup";
 import API from "../services/feedbackService";
 import Attach from "../utils/svg/Attach";
 import Trash from "../utils/svg/Trash";
