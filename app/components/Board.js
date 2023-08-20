@@ -1,3 +1,4 @@
+"use client";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import FeedbackItem from "./FeedbackItem";
@@ -21,9 +22,18 @@ export default function Board() {
   useEffect(() => {
     feedbackServiceApi.getAllFeedbackPost().then((res) => {
       setFeedback(res.data);
+      if (showFeedbackPopupItem) {
+        const filteredUpdatedFeedback = res.data.filter(
+          (itm) => showFeedbackPopupItem._id === itm._id
+        );
+        if (filteredUpdatedFeedback.length > 0) {
+          setShowFeedbackPopupItem(filteredUpdatedFeedback[0]);
+        }
+      }
+
       setloading(false);
     });
-  }, [feedback, loading, loadingVote]);
+  }, [loadingVote]);
 
   useEffect(() => {
     if (session?.user?.email) {
@@ -83,6 +93,9 @@ export default function Board() {
       {showFeedbackPopupItem && (
         <FeedbackItemPopup
           {...showFeedbackPopupItem}
+          feddbackPopupItem={showFeedbackPopupItem}
+          setLoadingVote={setLoadingVote}
+          loadingVote={loadingVote}
           setShow={setShowFeedbackPopupItem}
         />
       )}

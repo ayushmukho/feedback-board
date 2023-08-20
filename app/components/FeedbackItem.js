@@ -76,7 +76,7 @@ export default function FeedbackItem({
           {!loadingVote.includes(_id) && (
             <>
               <span className="triangle-vote-up mr-1"></span>
-              {vote.length || 0}
+              {vote?.length || 0}
             </>
           )}
         </button>
