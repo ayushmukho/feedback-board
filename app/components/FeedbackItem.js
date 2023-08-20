@@ -13,12 +13,12 @@ export default function FeedbackItem({
   description,
   vote,
   setLoadingVote,
-  loadingVote
+  loadingVote,
 }) {
   const { data: session } = useSession();
   const isLoggedIn = !!session?.user?.email;
   const [showLoginPopup, setShowLoginPopup] = useState(false);
-  
+
   const feedbackServiceApi = new API();
 
   const handleVote = async (e) => {
@@ -28,9 +28,12 @@ export default function FeedbackItem({
       localStorage.setItem("vote_after_login", _id);
       setShowLoginPopup(true);
     } else {
-      setLoadingVote(true);
+      const newVoteArray = [...loadingVote, _id];
+      setLoadingVote(newVoteArray);
       await feedbackServiceApi.voteForPost({ feedbackId: _id });
       setLoadingVote(false);
+      const updatedArray = loadingVote.filter((itm) => itm !== _id);
+      setLoadingVote(updatedArray);
     }
   };
   const handleGoogleLogin = async (e) => {
@@ -69,8 +72,8 @@ export default function FeedbackItem({
           onClick={handleVote}
           className="shadow-sm text-gray-600 shadow-gray-200 border rounded-md py-1 px-4 flex items-center gap-1"
         >
-          {loadingVote && <Spinner primary={true} />}
-          {!loadingVote && (
+          {loadingVote.includes(_id) && <Spinner primary={true} />}
+          {!loadingVote.includes(_id) && (
             <>
               <span className="triangle-vote-up mr-1"></span>
               {vote.length || 0}

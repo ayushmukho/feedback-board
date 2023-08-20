@@ -10,7 +10,7 @@ import Button from "./shared-components/Button";
 export default function Board() {
   const [showFeedbackPopupFrom, setShowFeedbackPopupForm] = useState(false);
   const [showFeedbackPopupItem, setShowFeedbackPopupItem] = useState(null);
-  const [loadingVote, setLoadingVote] = useState(false);
+  const [loadingVote, setLoadingVote] = useState([]);
   const [loading, setloading] = useState(true);
   const [feedback, setFeedback] = useState([]);
 
