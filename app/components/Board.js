@@ -19,7 +19,7 @@ export default function Board() {
 
   const feedbackServiceApi = new API();
 
-  useEffect(() => {
+  const fetchFeedback = async () => {
     feedbackServiceApi.getAllFeedbackPost().then((res) => {
       setFeedback(res.data);
       if (showFeedbackPopupItem) {
@@ -33,6 +33,10 @@ export default function Board() {
 
       setloading(false);
     });
+  };
+
+  useEffect(() => {
+    fetchFeedback();
   }, [loadingVote]);
 
   useEffect(() => {
@@ -88,7 +92,10 @@ export default function Board() {
         )}
       </div>
       {showFeedbackPopupFrom && (
-        <FeedbackFromPopup setShow={setShowFeedbackPopupForm} />
+        <FeedbackFromPopup
+          onCreate={fetchFeedback}
+          setShow={setShowFeedbackPopupForm}
+        />
       )}
       {showFeedbackPopupItem && (
         <FeedbackItemPopup

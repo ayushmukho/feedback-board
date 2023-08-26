@@ -1,18 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "./shared-components/Button";
 import Popup from "./shared-components/Popup";
 import API from "../services/feedbackService";
-import Attach from "../utils/svg/Attach";
-import Trash from "../utils/svg/Trash";
-import Spinner from "../utils/svg/Spinner";
 
-export default function FeedbackFromPopup({ setShow }) {
+import Spinner from "../utils/svg/Spinner";
+import Attachemnt from "./shared-components/Attachments";
+
+export default function FeedbackFromPopup({ setShow, onCreate }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [uploads, setUploads] = useState([]);
   const [loading, setLoading] = useState(false);
   const [creatPostLoading, setCreatePostLoading] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(true);
   const feedbackServiceApi = new API();
+
+  useEffect(() => {
+    if (title.trim().length !== 0 && description.trim().length !== 0) {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
+  }, [title, description]);
 
   const handleCreatePost = async (e) => {
     e.preventDefault();
@@ -26,6 +35,7 @@ export default function FeedbackFromPopup({ setShow }) {
     if (res.data) {
       setCreatePostLoading(false);
       setShow((prev) => !prev);
+      onCreate();
     }
     setCreatePostLoading(false);
   };
@@ -76,27 +86,14 @@ export default function FeedbackFromPopup({ setShow }) {
             </label>
             <div className="flex gap-3 mt-3">
               {uploads.map((link, idx) => (
-                <a
-                  href={link}
-                  target="_blank"
-                  className="h-16 relative"
-                  key={idx}
-                >
-                  <button
-                    onClick={(e) => handleRemoveAttachments(e, link)}
-                    className="absolute -right-2 -top-2 bg-red-400 p-1 rounded-md"
-                  >
-                    <Trash className="h-4 w-4" />
-                  </button>
-                  {/.(jpg|png)$/.test(link) ? (
-                    <img className="h-16 w-auto rounded-md" src={link} alt="" />
-                  ) : (
-                    <div className="bg-gray-300 h-16 p-2 flex items-center rounded-md">
-                      <Attach className="w-4 h-4" />
-                      {link.split("/")[3].substring(13)}
-                    </div>
-                  )}
-                </a>
+                <Attachemnt
+                  link={link}
+                  idx={idx}
+                  handleRemoveAttachments={(e, link) =>
+                    handleRemoveAttachments(e, link)
+                  }
+                  showRemoveButton={true}
+                />
               ))}
             </div>
           </div>
@@ -128,7 +125,7 @@ export default function FeedbackFromPopup({ setShow }) {
           </label>
 
           <Button
-            disabled={creatPostLoading}
+            disabled={creatPostLoading || isDisabled}
             primary="true"
             onClick={handleCreatePost}
           >
