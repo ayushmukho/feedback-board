@@ -41,6 +41,9 @@ export default function FeedbackItem({
     e.stopPropagation();
     await signIn("google");
   };
+  const votedByLoggedInUser = !!vote?.find(
+    (vote) => vote.userEmail === session?.user?.email
+  );
   return (
     <a
       href=""
@@ -68,7 +71,8 @@ export default function FeedbackItem({
             </div>
           </Popup>
         )}
-        <button
+        <Button
+          primary={votedByLoggedInUser && !loadingVote.includes(_id) && "true"}
           onClick={handleVote}
           className="shadow-sm text-gray-600 shadow-gray-200 border rounded-md py-1 px-4 flex items-center gap-1"
         >
@@ -79,7 +83,7 @@ export default function FeedbackItem({
               {vote?.length || 0}
             </>
           )}
-        </button>
+        </Button>
       </div>
     </a>
   );
