@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth";
 import { connectDatabase } from "../../config/database";
 import { authOptions } from "../../auth/[...nextauth]/route";
-import { Vote } from "../../models/vote";
+import { Vote } from "../../models/voteModel";
 import { Feedback } from "../../models/feedbackModels";
 
 (async function () {

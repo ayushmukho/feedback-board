@@ -56,7 +56,7 @@ export default function FeedbackItemPopup({
         </Button>
       </div>
       <>
-        <FeedbackItemPopupComments />
+        <FeedbackItemPopupComments id={_id} />
       </>
     </Popup>
   );

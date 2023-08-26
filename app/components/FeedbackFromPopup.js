@@ -2,15 +2,13 @@ import { useEffect, useState } from "react";
 import Button from "./shared-components/Button";
 import Popup from "./shared-components/Popup";
 import API from "../services/feedbackService";
-
-import Spinner from "../utils/svg/Spinner";
 import Attachemnt from "./shared-components/Attachments";
+import AttachFileButton from "./shared-components/AttachFileButton";
 
 export default function FeedbackFromPopup({ setShow, onCreate }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [uploads, setUploads] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [creatPostLoading, setCreatePostLoading] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
   const feedbackServiceApi = new API();
@@ -38,20 +36,6 @@ export default function FeedbackFromPopup({ setShow, onCreate }) {
       onCreate();
     }
     setCreatePostLoading(false);
-  };
-  const handleAttachFiles = async (e) => {
-    setLoading(true);
-    const files = [...e.target.files];
-    const data = new FormData();
-    for (const file of files) {
-      data.append("file", file);
-    }
-    const res = await feedbackServiceApi.uploadPostFile(data);
-    if (res?.data) {
-      setUploads((existingUploads) => [...existingUploads, ...res.data]);
-      setLoading(false);
-    }
-    setLoading(false);
   };
   const handleRemoveAttachments = async (e, link) => {
     e.preventDefault();
@@ -99,31 +83,7 @@ export default function FeedbackFromPopup({ setShow, onCreate }) {
           </div>
         )}
         <div className="flex gap-2 mt-2 justify-end">
-          <label
-            className={
-              loading
-                ? "py-2 px-4 text-gray-300"
-                : "text-gray-600 cursor-pointer py-2 px-4"
-            }
-          >
-            {loading ? (
-              <div className="flex items-center">
-                <Spinner />
-                <span>Uploading...</span>
-              </div>
-            ) : (
-              <>
-                <span>Attach Files</span>
-                <input
-                  multiple
-                  onChange={handleAttachFiles}
-                  type="file"
-                  className="hidden"
-                />
-              </>
-            )}
-          </label>
-
+          <AttachFileButton setUploads={setUploads} />
           <Button
             disabled={creatPostLoading || isDisabled}
             primary="true"

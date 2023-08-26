@@ -1,6 +1,6 @@
 import { connectDatabase } from "../../config/database";
 import { Feedback } from "../../models/feedbackModels";
-import { Vote } from "../../models/vote";
+import { Vote } from "../../models/voteModel";
 
 (async function () {
   await connectDatabase();
